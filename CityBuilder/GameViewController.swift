@@ -2,34 +2,37 @@
 //  GameViewController.swift
 //  CityBuilder
 //
-//  Created by Alexander Skorulis on 24/3/18.
+//  Created by Alexander Skorulis on 18/3/18.
 //  Copyright © 2018 Alex Skorulis. All rights reserved.
 //
 
 import SceneKit
 import QuartzCore
 
-class GameViewController: NSViewController {
+class GameViewController: NSViewController, SCNSceneRendererDelegate {
+    
+    let terrain = TerrainMap(width: 50, height: 50)
+    var mapNode: MapNode!
+    var scnView:SCNView!
+    let camera = IsometricCamera()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //let gen = DiamondSquareTerrainGenerator(map: terrain)
+        //gen.generate(roughness: 0.6)
+        
+        mapNode = MapNode(map: terrain)
+        
         // create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        
-        // create and add a camera to the scene
-        let cameraNode = SCNNode()
-        cameraNode.camera = SCNCamera()
-        scene.rootNode.addChildNode(cameraNode)
-        
-        // place the camera
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
+        let scene = SCNScene()
         
         // create and add a light to the scene
         let lightNode = SCNNode()
         lightNode.light = SCNLight()
         lightNode.light!.type = .omni
-        lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
+        lightNode.position = SCNVector3(x: 0, y: 100, z: 10)
+        lightNode.light?.intensity = 1000
         scene.rootNode.addChildNode(lightNode)
         
         // create and add an ambient light to the scene
@@ -39,20 +42,16 @@ class GameViewController: NSViewController {
         ambientLightNode.light!.color = NSColor.darkGray
         scene.rootNode.addChildNode(ambientLightNode)
         
-        // retrieve the ship node
-        let ship = scene.rootNode.childNode(withName: "ship", recursively: true)!
-        
-        // animate the 3d object
-        ship.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
+        scene.rootNode.addChildNode(self.mapNode)
         
         // retrieve the SCNView
-        let scnView = self.view as! SCNView
+        self.scnView = self.view as! SCNView
         
         // set the scene to the view
         scnView.scene = scene
         
         // allows the user to manipulate the camera
-        scnView.allowsCameraControl = true
+        //scnView.allowsCameraControl = true
         
         // show statistics such as fps and timing information
         scnView.showsStatistics = true
@@ -60,15 +59,29 @@ class GameViewController: NSViewController {
         // configure the view
         scnView.backgroundColor = NSColor.black
         
+        scnView.delegate = self
+        
+        //Add a camera to the scene
+        camera.addToView(view: scnView)
+        
         // Add a click gesture recognizer
         let clickGesture = NSClickGestureRecognizer(target: self, action: #selector(handleClick(_:)))
-        var gestureRecognizers = scnView.gestureRecognizers
-        gestureRecognizers.insert(clickGesture, at: 0)
-        scnView.gestureRecognizers = gestureRecognizers
+        scnView.addGestureRecognizer(clickGesture)
+        
+        let clickGesture2 = NSClickGestureRecognizer(target: self, action: #selector(handleSecondClick(_:)))
+        clickGesture2.buttonMask = 2
+        scnView.addGestureRecognizer(clickGesture2)
     }
     
-    @objc
-    func handleClick(_ gestureRecognizer: NSGestureRecognizer) {
+    @objc func handleClick(_ gestureRecognizer: NSGestureRecognizer) {
+        changeTerrain(gestureRecognizer: gestureRecognizer, amount: 1)
+    }
+    
+    @objc func handleSecondClick(_ gestureRecognizer: NSGestureRecognizer) {
+        changeTerrain(gestureRecognizer: gestureRecognizer, amount: -1)
+    }
+    
+    private func changeTerrain(gestureRecognizer: NSGestureRecognizer, amount:Int) {
         // retrieve the SCNView
         let scnView = self.view as! SCNView
         
@@ -80,26 +93,20 @@ class GameViewController: NSViewController {
             // retrieved the first clicked object
             let result = hitResults[0]
             
-            // get its material
-            let material = result.node.geometry!.firstMaterial!
+            let mod = TerrainModification(map: self.terrain)
+            let loc = mapNode.terrain.convertPosition(result.localCoordinates, from: result.node)
             
-            // highlight it
-            SCNTransaction.begin()
-            SCNTransaction.animationDuration = 0.5
+            let x = Int(loc.x / mapNode.terrain.edgeMult)
+            let y = Int(loc.z / mapNode.terrain.edgeMult)
+            mod.elevate(x: x, y: y, amount: amount)
             
-            // on completion - unhighlight
-            SCNTransaction.completionBlock = {
-                SCNTransaction.begin()
-                SCNTransaction.animationDuration = 0.5
-                
-                material.emission.contents = NSColor.black
-                
-                SCNTransaction.commit()
-            }
-            
-            material.emission.contents = NSColor.red
-            
-            SCNTransaction.commit()
+            mapNode.terrain.buildGeometry()
         }
+    }
+    
+    //MARK: SCNSceneRendererDelegate
+    
+    public func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
+        //glLineWidth(GLfloat(1))
     }
 }
