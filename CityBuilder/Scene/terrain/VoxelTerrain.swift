@@ -9,7 +9,7 @@ class VoxelTerrain: SCNNode {
 
     let map:TerrainMap
     private let heightMult:CGFloat = 0.5
-    let edgeMult:CGFloat = 2
+    let edgeMult:CGFloat = 5
     private let provider:VoxelProvider
     
     var material:SCNMaterial!
@@ -27,23 +27,27 @@ class VoxelTerrain: SCNNode {
     }
     
     func buildGeometry() {
-        self.enumerateChildNodes { (node, stop) in
-            node.removeFromParentNode()
-        }
-        
         //let geom = SCNBox(width: 1, height: CGFloat(heightMult), length: 1, chamferRadius: 0)
         //geom.materials = [self.material]
         
         for y in 0..<map.height {
             for x in 0..<map.width {
                 let square = map.get(x: x, y: y)
-                let geom = provider.getGeometry(map: map, x: x, y: y)
                 
-                let box = SCNNode(geometry: geom)
-                box.position = SCNVector3(CGFloat(x)*edgeMult, CGFloat(square.elevation) * heightMult, CGFloat(y)*edgeMult)
-                self.addChildNode(box)
+                let node = getNode(x: x, y: y)
+                node.geometry = provider.getFlatGeometry(map: map, x: x, y: y)
+                node.position = SCNVector3(CGFloat(x)*edgeMult, CGFloat(square.elevation) * heightMult, CGFloat(y)*edgeMult)
+                self.addChildNode(node)
             }
         }
+    }
+    
+    private func getNode(x:Int,y:Int) -> SCNNode {
+        let index = y * map.width + x
+        if (index < self.childNodes.count) {
+            return self.childNodes[index]
+        }
+        return SCNNode()
     }
     
     private func buildMaterial() {

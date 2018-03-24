@@ -1,10 +1,5 @@
-//
-//  TerrainMeshChunk.swift
-//  CityBuilder
-//
 //  Created by Alexander Skorulis on 20/3/18.
 //  Copyright © 2018 Alex Skorulis. All rights reserved.
-//
 
 import Cocoa
 import SceneKit

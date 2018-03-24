@@ -28,7 +28,7 @@ class VoxelProvider: NSObject {
         //material.diffuse.contents = NSColor.systemRed
     }
     
-    func getGeometry(map:TerrainMap,x:Int,y:Int) -> SCNGeometry {
+    func getNinePatch(map:TerrainMap,x:Int,y:Int) -> [[Float]] {
         let square = map.get(x: x, y: y)
         var diffSquare:[[Float]] = Array(repeating:Array(repeating:0,count:3),count:3)
         
@@ -60,6 +60,11 @@ class VoxelProvider: NSObject {
                 diffSquare[yOffset+1][xOffset+1] = diff
             }
         }
+        return diffSquare
+    }
+    
+    func getGeometry(map:TerrainMap,x:Int,y:Int) -> SCNGeometry {
+        let diffSquare:[[Float]] = getNinePatch(map: map, x: x, y: y)
         
         let key = "nine-\(diffSquare)"
         
@@ -68,9 +73,25 @@ class VoxelProvider: NSObject {
         return getCachedGeometry(key: key, generator: gen)
     }
     
+    func getFlatGeometry(map:TerrainMap,x:Int,y:Int) -> SCNGeometry {
+        let square = map.get(x: x, y: y)
+        var maxDiff:Float = 0
+        for yOffset in -1...1 {
+            for xOffset in -1...1 {
+                if let adjacent = map.getClipped(x: x+xOffset, y: y+yOffset) {
+                    maxDiff = max(maxDiff, square.elevation - adjacent.elevation)
+                }
+            }
+        }
+        
+        let key = "box-\(maxDiff)";
+        let gen = box2(height: CGFloat(maxDiff))
+        
+        return getCachedGeometry(key: key, generator: gen)
+    }
+    
     private func getCachedGeometry(key:String,generator:(() -> (SCNGeometry)) ) -> SCNGeometry {
         if let cached = geometryStore[key] {
-            print("cached")
             return cached
         }
         let geometry = generator()
@@ -150,26 +171,33 @@ class VoxelProvider: NSObject {
     }
     
     private func box2(height:CGFloat) -> (() -> SCNGeometry) {
-        let meshVertices:[SCNVector3] = [SCNVector3(x:-0.5,y:0,z:-0.5),SCNVector3(x:-0.5,y:0,z:0.5),SCNVector3(x:0.5,y:0,z:0.5),SCNVector3(x:0.5,y:0,z:-0.5), SCNVector3(x:-0.5,y:-height,z:-0.5),SCNVector3(x:-0.5,y:-height,z:0.5),SCNVector3(x:0.5,y:-height,z:0.5),SCNVector3(x:0.5,y:-height,z:-0.5) ]
-        
-        let texturePoints:[CGPoint] = [CGPoint(x:0,y:0),CGPoint(x:0,y:1),CGPoint(x:1,y:1),CGPoint(x:1,y:0),
-                                       CGPoint(x:1,y:0),CGPoint(x:1,y:1),CGPoint(x:1,y:0),CGPoint(x:0,y:0)]
-        
-        let indices:[UInt8] = [
-            0,1,2,2,3,0, //TOP
-            4,0,3,3,7,4, //FRONT
-            2,1,5,5,6,2, //BACK
-            5,1,0,0,4,5, //LEFT
-            3,2,6,6,7,3, //RIGHT
-                               ]
-        
-        let vertexSource = SCNGeometrySource(vertices: meshVertices)
-        let textureSource = SCNGeometrySource(textureCoordinates: texturePoints)
-        let element = SCNGeometryElement(indices: indices, primitiveType: .triangles)
-        
-        let geometry = SCNGeometry(sources: [vertexSource,textureSource], elements: [element])
-        geometry.materials = [material]
-        return {geometry}
+        return {
+            let min1 = -0.5 * self.edgeMult
+            let max1 = 0.5 * self.edgeMult
+            
+            let yMin = -height * self.heightMult
+            
+            let meshVertices:[SCNVector3] = [SCNVector3(x:min1,y:0,z:min1),SCNVector3(x:min1,y:0,z:max1),SCNVector3(x:max1,y:0,z:max1),SCNVector3(x:max1,y:0,z:min1), SCNVector3(x:min1,y:yMin,z:min1),SCNVector3(x:min1,y:yMin,z:max1),SCNVector3(x:max1,y:yMin,z:max1),SCNVector3(x:max1,y:yMin,z:min1) ]
+            
+            let texturePoints:[CGPoint] = [CGPoint(x:0,y:0),CGPoint(x:0,y:1),CGPoint(x:1,y:1),CGPoint(x:1,y:0),
+                                           CGPoint(x:1,y:0),CGPoint(x:1,y:1),CGPoint(x:1,y:0),CGPoint(x:0,y:0)]
+            
+            let indices:[UInt8] = [
+                0,1,2,2,3,0, //TOP
+                4,0,3,3,7,4, //FRONT
+                2,1,5,5,6,2, //BACK
+                5,1,0,0,4,5, //LEFT
+                3,2,6,6,7,3, //RIGHT
+                                   ]
+            
+            let vertexSource = SCNGeometrySource(vertices: meshVertices)
+            let textureSource = SCNGeometrySource(textureCoordinates: texturePoints)
+            let element = SCNGeometryElement(indices: indices, primitiveType: .triangles)
+            
+            let geometry = SCNGeometry(sources: [vertexSource,textureSource], elements: [element])
+            geometry.materials = [self.material]
+            return geometry
+        }
     }
     
     private func plane() -> (() -> SCNGeometry) {
