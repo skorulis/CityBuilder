@@ -47,8 +47,8 @@ class IsometricCamera: SCNNode {
         let panGesture = NSPanGestureRecognizer(target: self, action: #selector(panned(gesture:)))
         view.addGestureRecognizer(panGesture)
         
-        let rotGesture = NSRotationGestureRecognizer(target: self, action: #selector(rotated(gesture:)))
-        view.addGestureRecognizer(rotGesture)
+        //let rotGesture = NSRotationGestureRecognizer(target: self, action: #selector(rotated(gesture:)))
+        //view.addGestureRecognizer(rotGesture)
     }
     
     @objc func pinched(gesture:NSMagnificationGestureRecognizer) {

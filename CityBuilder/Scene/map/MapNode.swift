@@ -6,11 +6,11 @@ import SceneKit
 
 class MapNode: SCNNode {
 
-    let terrain: TerrainVoxelNode
+    let terrain: VoxelTerrain
     
     
     init(map:TerrainMap) {
-        terrain = TerrainVoxelNode(map: map)
+        terrain = VoxelTerrain(map: map)
         super.init()
         
         addChildNode(terrain)

@@ -1,16 +1,11 @@
-//
-//  TerrainVoxelNode.swift
-//  CityBuilder
-//
 //  Created by Alexander Skorulis on 21/3/18.
 //  Copyright © 2018 Alex Skorulis. All rights reserved.
-//
 
 import Cocoa
 import SceneKit
 
 
-class TerrainVoxelNode: SCNNode {
+class VoxelTerrain: SCNNode {
 
     let map:TerrainMap
     private let heightMult:CGFloat = 0.5

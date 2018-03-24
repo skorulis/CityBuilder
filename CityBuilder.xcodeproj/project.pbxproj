@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		FA27ACD32065CDE8004265C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27ACD22065CDE8004265C0 /* AppDelegate.swift */; };
 		FA27ACD52065CDE8004265C0 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27ACD42065CDE8004265C0 /* GameViewController.swift */; };
-		FA27ACD72065CDE8004265C0 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = FA27ACD62065CDE8004265C0 /* art.scnassets */; };
 		FA27ACD92065CDE8004265C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA27ACD82065CDE8004265C0 /* Assets.xcassets */; };
 		FA27ACDC2065CDE8004265C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA27ACDA2065CDE8004265C0 /* Main.storyboard */; };
 		FA27ACE82065CDE8004265C0 /* CityBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27ACE72065CDE8004265C0 /* CityBuilderTests.swift */; };
@@ -23,7 +22,7 @@
 		FA27AD0D2065E326004265C0 /* MapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27AD012065E326004265C0 /* MapNode.swift */; };
 		FA27AD0E2065E326004265C0 /* VoxelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27AD032065E326004265C0 /* VoxelProvider.swift */; };
 		FA27AD0F2065E326004265C0 /* TerrainMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27AD042065E326004265C0 /* TerrainMesh.swift */; };
-		FA27AD102065E326004265C0 /* TerrainVoxelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27AD052065E326004265C0 /* TerrainVoxelNode.swift */; };
+		FA27AD102065E326004265C0 /* VoxelTerrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27AD052065E326004265C0 /* VoxelTerrain.swift */; };
 		FA27AD112065E326004265C0 /* TerrainMeshChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27AD062065E326004265C0 /* TerrainMeshChunk.swift */; };
 		FA27AD122065E326004265C0 /* DiamondSquareTerrainGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27AD082065E326004265C0 /* DiamondSquareTerrainGenerator.swift */; };
 /* End PBXBuildFile section */
@@ -42,7 +41,6 @@
 		FA27ACCF2065CDE8004265C0 /* CityBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CityBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA27ACD22065CDE8004265C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA27ACD42065CDE8004265C0 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		FA27ACD62065CDE8004265C0 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		FA27ACD82065CDE8004265C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA27ACDB2065CDE8004265C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FA27ACDD2065CDE8004265C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,7 +58,7 @@
 		FA27AD012065E326004265C0 /* MapNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapNode.swift; sourceTree = "<group>"; };
 		FA27AD032065E326004265C0 /* VoxelProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoxelProvider.swift; sourceTree = "<group>"; };
 		FA27AD042065E326004265C0 /* TerrainMesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerrainMesh.swift; sourceTree = "<group>"; };
-		FA27AD052065E326004265C0 /* TerrainVoxelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerrainVoxelNode.swift; sourceTree = "<group>"; };
+		FA27AD052065E326004265C0 /* VoxelTerrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoxelTerrain.swift; sourceTree = "<group>"; };
 		FA27AD062065E326004265C0 /* TerrainMeshChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerrainMeshChunk.swift; sourceTree = "<group>"; };
 		FA27AD082065E326004265C0 /* DiamondSquareTerrainGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiamondSquareTerrainGenerator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,7 +108,6 @@
 				FA27ACF22065CE0A004265C0 /* Util */,
 				FA27ACD22065CDE8004265C0 /* AppDelegate.swift */,
 				FA27ACD42065CDE8004265C0 /* GameViewController.swift */,
-				FA27ACD62065CDE8004265C0 /* art.scnassets */,
 				FA27ACD82065CDE8004265C0 /* Assets.xcassets */,
 				FA27ACDA2065CDE8004265C0 /* Main.storyboard */,
 				FA27ACDD2065CDE8004265C0 /* Info.plist */,
@@ -179,7 +176,7 @@
 			children = (
 				FA27AD032065E326004265C0 /* VoxelProvider.swift */,
 				FA27AD042065E326004265C0 /* TerrainMesh.swift */,
-				FA27AD052065E326004265C0 /* TerrainVoxelNode.swift */,
+				FA27AD052065E326004265C0 /* VoxelTerrain.swift */,
 				FA27AD062065E326004265C0 /* TerrainMeshChunk.swift */,
 			);
 			path = terrain;
@@ -278,7 +275,6 @@
 			files = (
 				FA27ACDC2065CDE8004265C0 /* Main.storyboard in Resources */,
 				FA27ACD92065CDE8004265C0 /* Assets.xcassets in Resources */,
-				FA27ACD72065CDE8004265C0 /* art.scnassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,7 +299,7 @@
 				FA27AD0E2065E326004265C0 /* VoxelProvider.swift in Sources */,
 				FA27AD0D2065E326004265C0 /* MapNode.swift in Sources */,
 				FA27ACF52065CE0A004265C0 /* CGPointExtensions.swift in Sources */,
-				FA27AD102065E326004265C0 /* TerrainVoxelNode.swift in Sources */,
+				FA27AD102065E326004265C0 /* VoxelTerrain.swift in Sources */,
 				FA27ACD32065CDE8004265C0 /* AppDelegate.swift in Sources */,
 				FA27AD122065E326004265C0 /* DiamondSquareTerrainGenerator.swift in Sources */,
 				FA27ACF62065CE0A004265C0 /* SCNVector3Extensions.swift in Sources */,
