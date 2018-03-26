@@ -6,19 +6,22 @@ import SceneKit
 
 class MapNode: SCNNode {
 
+    let setup = TerrainSetupModel()
     let terrain: VoxelTerrain
+    //let terrain:TerrainMesh
     
     
     init(map:TerrainMap) {
-        terrain = VoxelTerrain(map: map)
+        //terrain = TerrainMesh(map: map,setup:setup)
+        terrain = VoxelTerrain(map: map,setup:setup)
         super.init()
         
         addChildNode(terrain)
-        terrain.position = SCNVector3(x: -CGFloat(map.width)*terrain.edgeMult/2, y: 0, z: -CGFloat(map.height)*terrain.edgeMult/2)
+        terrain.position = SCNVector3(x: -CGFloat(map.width)*setup.edgeMult/2, y: 0, z: -CGFloat(map.height)*setup.edgeMult/2)
         
         let pointer = SCNBox(width: 2, height: 2, length: 2, chamferRadius: 0)
         let pointerNode = SCNNode(geometry: pointer)
-        pointerNode.position = SCNVector3(x:0,y:0,z:CGFloat(map.height)*terrain.edgeMult/2 + 3)
+        pointerNode.position = SCNVector3(x:0,y:0,z:CGFloat(map.height)*setup.edgeMult/2 + 3)
         addChildNode(pointerNode)
     }
     

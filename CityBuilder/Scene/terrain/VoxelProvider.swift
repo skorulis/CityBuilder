@@ -17,12 +17,10 @@ class VoxelProvider: NSObject {
 
     private var geometryStore:[String:SCNGeometry] = [:]
     private let material:SCNMaterial
-    private let heightMult:CGFloat
-    private let edgeMult:CGFloat
+    private let setup:TerrainSetupModel
     
-    init(heightMult:CGFloat,edgeMult:CGFloat) {
-        self.heightMult = heightMult
-        self.edgeMult = edgeMult
+    init(setup:TerrainSetupModel) {
+        self.setup = setup
         material = SCNMaterial()
         material.diffuse.contents = NSImage(named: .grassTexture)
         //material.diffuse.contents = NSColor.systemRed
@@ -109,8 +107,8 @@ class VoxelProvider: NSObject {
             return UInt8(y * 4 + x)
         }
         
-        let sideLen:CGFloat = edgeMult/3.0
-        let maxEdge:CGFloat = edgeMult/2.0
+        let sideLen:CGFloat = setup.edgeMult/3.0
+        let maxEdge:CGFloat = setup.edgeMult/2.0
         
         for z in 0..<4 {
             for x in 0..<4 {
@@ -130,7 +128,7 @@ class VoxelProvider: NSObject {
                         dy = 2
                     }
                     
-                    y = CGFloat(neighbours[dy][dx]) * 0.5 * CGFloat(heightMult)
+                    y = CGFloat(neighbours[dy][dx]) * 0.5 * CGFloat(setup.heightMult)
                     
                 }
                 
@@ -172,10 +170,10 @@ class VoxelProvider: NSObject {
     
     private func box2(height:CGFloat) -> (() -> SCNGeometry) {
         return {
-            let min1 = -0.5 * self.edgeMult
-            let max1 = 0.5 * self.edgeMult
+            let min1 = -0.5 * self.setup.edgeMult
+            let max1 = 0.5 * self.setup.edgeMult
             
-            let yMin = -height * self.heightMult
+            let yMin = -height * self.setup.heightMult
             
             let meshVertices:[SCNVector3] = [SCNVector3(x:min1,y:0,z:min1),SCNVector3(x:min1,y:0,z:max1),SCNVector3(x:max1,y:0,z:max1),SCNVector3(x:max1,y:0,z:min1), SCNVector3(x:min1,y:yMin,z:min1),SCNVector3(x:min1,y:yMin,z:max1),SCNVector3(x:max1,y:yMin,z:max1),SCNVector3(x:max1,y:yMin,z:min1) ]
             

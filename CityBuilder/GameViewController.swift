@@ -96,8 +96,8 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
             let mod = TerrainModification(map: self.terrain)
             let loc = mapNode.terrain.convertPosition(result.localCoordinates, from: result.node)
             
-            let x = Int(loc.x / mapNode.terrain.edgeMult)
-            let y = Int(loc.z / mapNode.terrain.edgeMult)
+            let x = Int(loc.x / mapNode.setup.edgeMult)
+            let y = Int(loc.z / mapNode.setup.edgeMult)
             mod.elevate(x: x, y: y, amount: amount)
             
             mapNode.terrain.buildGeometry()

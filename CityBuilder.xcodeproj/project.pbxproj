@@ -25,6 +25,7 @@
 		FA27AD102065E326004265C0 /* VoxelTerrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27AD052065E326004265C0 /* VoxelTerrain.swift */; };
 		FA27AD112065E326004265C0 /* TerrainMeshChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27AD062065E326004265C0 /* TerrainMeshChunk.swift */; };
 		FA27AD122065E326004265C0 /* DiamondSquareTerrainGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27AD082065E326004265C0 /* DiamondSquareTerrainGenerator.swift */; };
+		FA650DDE20698DEE00B50E09 /* TerrainSetupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA650DDD20698DEE00B50E09 /* TerrainSetupModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		FA27AD052065E326004265C0 /* VoxelTerrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoxelTerrain.swift; sourceTree = "<group>"; };
 		FA27AD062065E326004265C0 /* TerrainMeshChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerrainMeshChunk.swift; sourceTree = "<group>"; };
 		FA27AD082065E326004265C0 /* DiamondSquareTerrainGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiamondSquareTerrainGenerator.swift; sourceTree = "<group>"; };
+		FA650DDD20698DEE00B50E09 /* TerrainSetupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainSetupModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 				FA27AD042065E326004265C0 /* TerrainMesh.swift */,
 				FA27AD052065E326004265C0 /* VoxelTerrain.swift */,
 				FA27AD062065E326004265C0 /* TerrainMeshChunk.swift */,
+				FA650DDD20698DEE00B50E09 /* TerrainSetupModel.swift */,
 			);
 			path = terrain;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				FA27AD0D2065E326004265C0 /* MapNode.swift in Sources */,
 				FA27ACF52065CE0A004265C0 /* CGPointExtensions.swift in Sources */,
 				FA27AD102065E326004265C0 /* VoxelTerrain.swift in Sources */,
+				FA650DDE20698DEE00B50E09 /* TerrainSetupModel.swift in Sources */,
 				FA27ACD32065CDE8004265C0 /* AppDelegate.swift in Sources */,
 				FA27AD122065E326004265C0 /* DiamondSquareTerrainGenerator.swift in Sources */,
 				FA27ACF62065CE0A004265C0 /* SCNVector3Extensions.swift in Sources */,

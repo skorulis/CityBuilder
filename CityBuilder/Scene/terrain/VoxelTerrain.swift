@@ -8,15 +8,15 @@ import SceneKit
 class VoxelTerrain: SCNNode {
 
     let map:TerrainMap
-    private let heightMult:CGFloat = 0.5
-    let edgeMult:CGFloat = 5
+    let setup:TerrainSetupModel
     private let provider:VoxelProvider
     
     var material:SCNMaterial!
     
-    init(map:TerrainMap) {
+    init(map:TerrainMap,setup:TerrainSetupModel) {
         self.map = map
-        self.provider = VoxelProvider(heightMult: heightMult,edgeMult:edgeMult)
+        self.setup = setup
+        self.provider = VoxelProvider(setup:self.setup)
         super.init()
         buildMaterial()
         buildGeometry()
@@ -36,7 +36,7 @@ class VoxelTerrain: SCNNode {
                 
                 let node = getNode(x: x, y: y)
                 node.geometry = provider.getFlatGeometry(map: map, x: x, y: y)
-                node.position = SCNVector3(CGFloat(x)*edgeMult, CGFloat(square.elevation) * heightMult, CGFloat(y)*edgeMult)
+                node.position = SCNVector3(CGFloat(x)*setup.edgeMult, CGFloat(square.elevation) * setup.heightMult, CGFloat(y)*setup.edgeMult)
                 self.addChildNode(node)
             }
         }

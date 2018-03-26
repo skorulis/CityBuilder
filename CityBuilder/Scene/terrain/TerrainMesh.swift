@@ -6,8 +6,7 @@ import SceneKit
 
 class TerrainMesh: SCNNode {
 
-    private let heightMult:CGFloat = 0.5
-    private let chunkSize:Int = 64
+    let setup:TerrainSetupModel
     
     var meshVertices:[SCNVector3] = []
     var materials:[SCNMaterial]!
@@ -15,15 +14,16 @@ class TerrainMesh: SCNNode {
     
     var chunks:[TerrainMeshChunk] = []
     
-    init(map:TerrainMap) {
+    init(map:TerrainMap,setup:TerrainSetupModel) {
         self.map = map
+        self.setup = setup
         super.init()
         
         buildMaterial()
         
-        for x in stride(from: 0, to: map.width, by: chunkSize) {
-            for y in stride(from: 0, to: map.height, by: chunkSize) {
-                let chunk = TerrainMeshChunk(map: map, chunkSize: chunkSize, xOffset: x, yOffset: y)
+        for x in stride(from: 0, to: map.width, by: setup.chunkSize) {
+            for y in stride(from: 0, to: map.height, by: setup.chunkSize) {
+                let chunk = TerrainMeshChunk(map: map, setup: setup, xOffset: x, yOffset: y)
                 chunk.position = SCNVector3(x:CGFloat(x),y:0,z:CGFloat(y))
                 self.addChildNode(chunk)
                 self.chunks.append(chunk)

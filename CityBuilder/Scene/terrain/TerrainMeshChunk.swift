@@ -6,19 +6,19 @@ import SceneKit
 
 class TerrainMeshChunk: SCNNode {
     
-    private let heightMult:CGFloat = 0.5
-    
     let chunkSize:Int
     let xOffset:Int
     let yOffset:Int
+    let setup:TerrainSetupModel
     
     let map:TerrainMap
     
-    init(map:TerrainMap,chunkSize:Int,xOffset:Int,yOffset:Int) {
+    init(map:TerrainMap,setup:TerrainSetupModel,xOffset:Int,yOffset:Int) {
         self.map = map
-        self.chunkSize = chunkSize
+        self.chunkSize = setup.chunkSize
         self.xOffset = xOffset
         self.yOffset = yOffset
+        self.setup = setup
         super.init()
     }
     
@@ -38,9 +38,9 @@ class TerrainMeshChunk: SCNNode {
                 let xIndex = x - xOffset
                 let square = self.map.get(x: x, y: y)
                 let index = yIndex * xCount + xIndex
-                meshVertices[index].x = CGFloat(x - xOffset)
-                meshVertices[index].z = CGFloat(y - yOffset)
-                meshVertices[index].y = CGFloat(square.elevation) * heightMult
+                meshVertices[index].x = CGFloat(x - xOffset) * setup.edgeMult
+                meshVertices[index].z = CGFloat(y - yOffset) * setup.edgeMult
+                meshVertices[index].y = CGFloat(square.elevation) * setup.heightMult
             }
         }
         
