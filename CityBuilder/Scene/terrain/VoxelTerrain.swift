@@ -62,4 +62,9 @@ class VoxelTerrain: SCNNode {
         self.material = material
     }
     
+    func getHeight(x:Int,z:Int) -> CGFloat {
+        let square = map.get(x: x, y: z)
+        return CGFloat(square.elevation) * setup.heightMult
+    }
+    
 }

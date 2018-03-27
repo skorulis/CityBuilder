@@ -26,6 +26,8 @@
 		FA27AD112065E326004265C0 /* TerrainMeshChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27AD062065E326004265C0 /* TerrainMeshChunk.swift */; };
 		FA27AD122065E326004265C0 /* DiamondSquareTerrainGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27AD082065E326004265C0 /* DiamondSquareTerrainGenerator.swift */; };
 		FA650DDE20698DEE00B50E09 /* TerrainSetupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA650DDD20698DEE00B50E09 /* TerrainSetupModel.swift */; };
+		FA650DE12069912B00B50E09 /* TreeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA650DE02069912B00B50E09 /* TreeEntity.swift */; };
+		FA650DE3206991B600B50E09 /* MapEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA650DE2206991B600B50E09 /* MapEntities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		FA27AD062065E326004265C0 /* TerrainMeshChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerrainMeshChunk.swift; sourceTree = "<group>"; };
 		FA27AD082065E326004265C0 /* DiamondSquareTerrainGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiamondSquareTerrainGenerator.swift; sourceTree = "<group>"; };
 		FA650DDD20698DEE00B50E09 /* TerrainSetupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainSetupModel.swift; sourceTree = "<group>"; };
+		FA650DE02069912B00B50E09 /* TreeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeEntity.swift; sourceTree = "<group>"; };
+		FA650DE2206991B600B50E09 /* MapEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEntities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +154,7 @@
 		FA27ACFD2065E326004265C0 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				FA650DDF2069911900B50E09 /* entities */,
 				FA27ACFE2065E326004265C0 /* camera */,
 				FA27AD002065E326004265C0 /* map */,
 				FA27AD022065E326004265C0 /* terrain */,
@@ -169,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				FA27AD012065E326004265C0 /* MapNode.swift */,
+				FA650DE2206991B600B50E09 /* MapEntities.swift */,
 			);
 			path = map;
 			sourceTree = "<group>";
@@ -191,6 +197,14 @@
 				FA27AD082065E326004265C0 /* DiamondSquareTerrainGenerator.swift */,
 			);
 			path = Generator;
+			sourceTree = "<group>";
+		};
+		FA650DDF2069911900B50E09 /* entities */ = {
+			isa = PBXGroup;
+			children = (
+				FA650DE02069912B00B50E09 /* TreeEntity.swift */,
+			);
+			path = entities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,6 +314,8 @@
 				FA27AD0A2065E326004265C0 /* TerrainModification.swift in Sources */,
 				FA27AD112065E326004265C0 /* TerrainMeshChunk.swift in Sources */,
 				FA27AD0E2065E326004265C0 /* VoxelProvider.swift in Sources */,
+				FA650DE12069912B00B50E09 /* TreeEntity.swift in Sources */,
+				FA650DE3206991B600B50E09 /* MapEntities.swift in Sources */,
 				FA27AD0D2065E326004265C0 /* MapNode.swift in Sources */,
 				FA27ACF52065CE0A004265C0 /* CGPointExtensions.swift in Sources */,
 				FA27AD102065E326004265C0 /* VoxelTerrain.swift in Sources */,

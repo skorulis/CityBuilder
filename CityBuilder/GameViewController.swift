@@ -101,6 +101,7 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
             mod.elevate(x: x, y: y, amount: amount)
             
             mapNode.terrain.buildGeometry()
+            mapNode.entities.updateEntityBases()
         }
     }
     
